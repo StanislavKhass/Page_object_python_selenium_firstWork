@@ -12,3 +12,6 @@ class ProductPageLocators():
     ADD_TO_CART = (By.CSS_SELECTOR, "#add_to_basket_form")
     REAL_NAME_GOOD = (By.CSS_SELECTOR, "#content_inner .product_page .row .product_main h1")
     NOTIFY_AFTER_ADD_IN_CART = (By.CSS_SELECTOR, "#messages div:nth-child(1) .alertinner strong")
+    AMOUNT_OF_CART = (By.CSS_SELECTOR, "header  .page_inner .row .basket-mini")
+    AMOUNT_OF_GOOD_PRICE = (By.CSS_SELECTOR, ".product_page .row .product_main p.price_color")
+    
