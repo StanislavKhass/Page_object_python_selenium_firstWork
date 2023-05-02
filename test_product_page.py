@@ -6,9 +6,9 @@ def test_guest_can_add_product_to_basket(browser):
     page.open()                         # открываем страницу
     page.should_be_product_page_url()   # проверяем что находимся на страеице продукта
     page.should_cart_button()           # Проверяем что кнопка доступна
-    page.save_amount_of_cart()          #Сохраняем значение сумму в корзине
-    page.save_amount_of_good_price()    # Сохраняем стоимость товара
+    expected_price = page.save_amount_of_good_with_current_cart()          #Сохраняем значения суммы корзины
+    name_of_product = page.save_name_of_product()        #Сохраняем название товара
     page.click_to_cart_button()         # Кликаем по кнопке
     page.solve_quiz_and_get_code()      # Обрабатываем всплывающие окно
-    page.expected_result_good_in_cart_info_check() #Ожидаемый результат товар который добавили == добавился с правильным названием в карзину.
-    page.expected_result_good_price_add_to_cart() #ПРоверяем что товар по стоимость добавился в корзину
+    page.expected_result_good_in_cart_add_notify_same(name_of_product) #Ожидаемый результат товар который добавили == добавился с правильным названием в карзину.
+    page.expected_result_good_price_add_notify_same(expected_price) #ПРоверяем что товар по стоимость добавился в корзину
