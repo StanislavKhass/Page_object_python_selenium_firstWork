@@ -1,4 +1,4 @@
-from selenium.common.exceptions import TimeoutException,NoAlertPresentException
+from selenium.common.exceptions import TimeoutException,NoAlertPresentException,NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
@@ -42,6 +42,15 @@ class BasePage():
 
         return False
 
+    #ждем что элемент появится в течение нескольких секунд
+    def is_element_present_wait(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
+
     def is_disappeared(self, how, what, timeout=4):
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException).\
@@ -57,3 +66,12 @@ class BasePage():
 
     def should_be_login_link(self):
        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
+    def should_be_basket_link(self):
+        # реализуйте проверку, что есть форма логина
+        assert self.is_element_present(*BasePageLocators.BASKET_LINK), "Basket link is not presented"
+
+    def going_to_busket(self):
+        # реализуйте проверку, что есть форма логина
+        basket = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        basket.click()

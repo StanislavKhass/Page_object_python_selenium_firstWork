@@ -1,4 +1,5 @@
 from .pages.product_page import ProductPage
+from .pages.basket_page import BasketPage
 import pytest
 
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
@@ -36,7 +37,8 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page.click_to_cart_button()
     page.solve_quiz_and_get_code()
     page.should_not_be_success_message()
-
+#1
+#@pytest.mark.skip
 def test_guest_cant_see_success_message(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
     page = ProductPage(browser, link)   # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
@@ -51,15 +53,40 @@ def test_message_disappeared_after_adding_product_to_basket(browser):
     page.click_to_cart_button()
     page.solve_quiz_and_get_code()
     page.should_be_success_message_disappeared()
-
+#2
+#@pytest.mark.skip
 def test_guest_should_see_login_link_on_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(browser, link)
     page.open()
     page.should_be_login_link()
 
+#3
+#@pytest.mark.skip
 def test_guest_can_go_to_login_page_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(browser, link)
     page.open()
     page.go_to_login_page()
+
+#Перед отрицательной проверкой проверяем что такая ссылка есть
+def test_guest_add_good_in_basket_and_check_patch(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.click_to_cart_button()
+    page.should_be_basket_link()
+    page.going_to_busket()
+    basket_page = BasketPage(browser,browser.current_url)
+    basket_page.expected_result_product_in_busket()
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_be_basket_link()
+    page.going_to_busket()
+    basket_page = BasketPage(browser,browser.current_url)
+    basket_page.should_be_basket_url()
+    basket_page.expected_result_not_product_in_busket() #проверяем что нет товаров в корзине
+    basket_page.expected_result_not_product_in_busket_notify() #проверяем корзина пустая
