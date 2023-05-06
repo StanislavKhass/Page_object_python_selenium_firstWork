@@ -1,5 +1,6 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
+from selenium.common.exceptions import NoSuchElementException,NoAlertPresentException
 import time
 
 class ProductPage(BasePage):
@@ -65,3 +66,11 @@ class ProductPage(BasePage):
             assert True
         else:
             assert False, f"Totall cart is not right:expected:{expected_price},Current:{text_amount_of_cart}"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.NOTIFY_AFTER_ADD_IN_CART), \
+           "Success message is presented, but should not be"
+
+    def should_be_success_message_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.NOTIFY_AFTER_ADD_IN_CART), \
+            "Success message should be disappeared , but it not happend"
