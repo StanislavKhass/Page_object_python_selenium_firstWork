@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 
-
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 
@@ -15,3 +14,7 @@ class ProductPageLocators():
     AMOUNT_OF_CART = (By.CSS_SELECTOR, "header  .page_inner .row .basket-mini")
     NOTIFY_AMOUNT_OF_CART = (By.CSS_SELECTOR, ".page .page_inner #messages div:nth-child(3) .alertinner p strong")
     AMOUNT_OF_GOOD_PRICE = (By.CSS_SELECTOR, ".product_page .row .product_main p.price_color")
+
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
