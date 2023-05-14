@@ -4,10 +4,13 @@ from .pages.basket_page import BasketPage
 from .pages.product_page import ProductPage
 import pytest
 
+main_link = "http://selenium1py.pythonanywhere.com/"
+good_link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/"
+
 @pytest.mark.login_guest
 class TestLoginFromMainPage():
     def test_guest_can_go_to_login_page(self,browser):
-        link = "http://selenium1py.pythonanywhere.com/"
+        link = main_link
         page = MainPage(browser, link)   # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
         page.open()                      # открываем страницу
         page.go_to_login_page() # выполняем метод страницы — переходим на страницу логина
@@ -15,7 +18,7 @@ class TestLoginFromMainPage():
         login_page.should_be_login_page() # Проверяем 3 условия - 1.есть login в ссылке , 2.есть формы логина и 3.регистрации
 
     def test_guest_should_see_login_link(self,browser):
-        link = "http://selenium1py.pythonanywhere.com/"
+        link = main_link
         page = MainPage(browser, link)
         page.open()
         page.should_be_login_link()
@@ -24,7 +27,7 @@ class TestLoginFromMainPage():
 class TestShoudEmptyBasketFromMainPage():
     #Перед отрицательной проверкой проверяем что такая ссылка есть
     def test_guest_add_good_in_basket_and_check_patch(self,browser):
-        link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/"
+        link = good_link
         page = ProductPage(browser, link)
         page.open()
         page.click_to_cart_button()
@@ -34,7 +37,7 @@ class TestShoudEmptyBasketFromMainPage():
         basket_page.expected_result_product_in_busket()
     #Отрицательная проверка
     def test_guest_cant_see_product_in_basket_opened_from_main_page(self,browser):
-        link = "http://selenium1py.pythonanywhere.com/"
+        link = main_link
         page = MainPage(browser, link)
         page.open()
         page.should_be_basket_link()
